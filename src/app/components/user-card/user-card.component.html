@@ -1,0 +1,29 @@
+<div class="user-card" [class.user-card--expanded]="expanded()" (click)="toggle()">
+  <div class="user-card__header">
+    <img [src]="user().image" alt="Avatar" class="user-card__avatar" loading="lazy">
+    <div class="user-card__info">
+      <h3 class="user-card__name">{{ user().firstname }} {{ user().lastname }}</h3>
+      <span class="user-card__preview">{{ user().email }}</span>
+    </div>
+    <div class="user-card__chevron" [class.rotated]="expanded()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </div>
+
+  <div class="user-card__details" [@expand]="expanded() ? 'expanded' : 'collapsed'">
+    <div class="details-grid">
+      <div class="detail-item">
+        <label>Nationality</label>
+        <span>{{ user().nat }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Age</label>
+        <span>{{ user().age }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Phone</label>
+        <span>{{ user().phone }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,7 +25,7 @@ describe('UserListComponent', () => {
       .compileComponents();
 
     fixture = TestBed.createComponent(UserListComponent);
-    fixture.componentRef.setInput('users', mockedUsers);
+
 
     component = fixture.componentInstance;
 

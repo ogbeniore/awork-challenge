@@ -1,14 +1,154 @@
-@use 'ease/ease-import.scss' as *;
+.user-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f8f9fa;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+}
 
-:host {
-  .user-list {
-    background-color: $color-white;
-    border-radius: 18px;
-    border: 6px solid $color-sky;
-    display: flex;
+.list-controls {
+  padding: 1rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  z-index: 10;
+
+  @media (max-width: 600px) {
     flex-direction: column;
-    margin: 0 auto;
-    max-width: 60%;
-    padding: 12px;
+    align-items: stretch;
+  }
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+
+  label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 0.05em;
+  }
+}
+
+.search-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fcfcfc;
+  transition: all 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+}
+
+.toggle-group {
+  display: flex;
+  background: #f0f2f5;
+  padding: 4px;
+  border-radius: 8px;
+  gap: 4px;
+
+  button {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #333;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    &.active {
+      background: white;
+      color: #1a1a1a;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.viewport-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden; // Critical for virtual scroll to size correctly
+}
+
+.user-viewport {
+  height: 100%;
+  width: 100%;
+
+  // Hide scrollbar but allow scrolling
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 3px;
+  }
+}
+
+.viewport-item {
+  // Ensure items have proper spacing
+  padding: 0 1rem;
+}
+
+.group-header {
+  padding: 1rem 0.5rem 0.5rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  background: #f8f9fa; // Match container bg
+  position: sticky;
+  top: 0;
+}
+
+.loading-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 20;
+  gap: 1rem;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

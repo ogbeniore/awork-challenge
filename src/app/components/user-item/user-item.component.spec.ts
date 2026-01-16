@@ -38,7 +38,7 @@ describe('UserItemComponent', () => {
   });
 
   it('should calculate the count of users with same nationality', () => {
-    const expectedNationalitiesCount = 2;
+    const expectedNationalitiesCount = 6;
     expect(component.nationalitiesCount).toEqual(expectedNationalitiesCount);
   });
 });

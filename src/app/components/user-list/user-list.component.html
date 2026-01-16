@@ -1,11 +1,48 @@
-@if (users().length) {
-  <article class="user-list">
-    @for (user of users(); track $index) {
-      <app-user-item [user]="user" [allUsers]="users()" />
+<div class="user-list-container">
+  <header class="list-controls">
+    <div class="control-group">
+      <label>Search</label>
+      <input 
+        type="text" 
+        placeholder="Search users..." 
+        class="search-input"
+        (input)="onSearch($event)">
+    </div>
+
+    <div class="control-group">
+      <label>Group By</label>
+      <div class="toggle-group">
+        <button 
+          [class.active]="usersService.criteria() === 'alphabetically'"
+          (click)="usersService.updateCriteria('alphabetically')">A-Z</button>
+        <button 
+          [class.active]="usersService.criteria() === 'age'"
+          (click)="usersService.updateCriteria('age')">Age</button>
+        <button 
+          [class.active]="usersService.criteria() === 'nationality'"
+          (click)="usersService.updateCriteria('nationality')">Nat</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="viewport-wrapper">
+    @if (usersService.isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading 5000 users...</p>
+      </div>
     }
-  </article>
-} @else {
-  <article class="user-list">
-    <p>Loading…</p>
-  </article>
-}
+
+    <cdk-virtual-scroll-viewport itemSize="70" class="user-viewport">
+      <div *cdkVirtualFor="let item of usersService.displayNodes()" class="viewport-item">
+        @if (isHeader(item)) {
+          <div class="group-header">
+            {{ item.label }}
+          </div>
+        } @else {
+          <app-user-card [user]="$any(item)"></app-user-card>
+        }
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>

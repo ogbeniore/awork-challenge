@@ -18,6 +18,7 @@ export class User {
   image?: string
   nat?: string
   login?: LoginInfo
+  age?: number
 
   constructor(data: Partial<User> = {}) {
     Object.assign(this, data)
@@ -44,7 +45,8 @@ export class User {
       phone: user.phone,
       image: user.picture.medium,
       nat: user.nat,
-      login: user.login
+      login: user.login,
+      age: user.dob?.age
     }))
   }
 }
